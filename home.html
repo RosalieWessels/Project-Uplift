@@ -19,11 +19,11 @@
     <div class="main float-container">
         <div class="card">
             <div class="card__content" style="padding: 20px;">
-                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;">Nearby Shelters</button>
-                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;">Food Banks</button>
-                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;">Job Opportunities</button>
-                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;">Education resources</button>
-                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;">Mental Health Chat</button>
+                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;" id="shelters_button" onclick="getShelters()">Nearby Shelters</button>
+                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;" id="banks">Food Banks</button>
+                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;" id="jobs">Job Opportunities</button>
+                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;" id="education">Education resources</button>
+                <button type="button" class="btn btn-dark font" style="margin-bottom: 20px;" id="chat">Mental Health Chat</button>
             </div>
             <div class="blob"></div>
             <div class="blob"></div>
@@ -31,10 +31,10 @@
             <div class="blob"></div>
         </div>
     
-        <div class="cards" style="padding: 20px;">
-            <h2 class="font" style="padding-bottom: 20px; font-weight: 600;">Nearby Shelters</h2>
+        <div id = "cards" class="cards" style="padding: 20px;">
+            <!-- <h2 class="font" style="padding-bottom: 20px; font-weight: 600;">Nearby Shelters</h2> -->
 
-            <div class="content-card-basic">
+            <!-- <div id = "card" class="content-card-basic">
                 <div class="card__content_basic">
                     <div style="display: flex; justify-content: left; column-gap: 20px;">
                         <img src="https://s.hdnux.com/photos/01/27/26/10/22897161/7/1200x0.jpg" alt="" style="width: 20%;"w>
@@ -51,10 +51,23 @@
                         <button type="button" class="btn btn-light font">View on Google Maps</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
             
         </div>
     </div>
+    <!-- <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+      </script> -->
+
+    <!-- Link to Firebase -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="home.js"></script>    
     </body>
