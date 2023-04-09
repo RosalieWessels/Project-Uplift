@@ -93,8 +93,8 @@ function getShelters() {
                                 </div>
                                 
                                 <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                                    <h5 class="font" style="margin-top: 10px;">Shelter Adress: ${address}</h5>
-                                    <button type="button" class="btn btn-light font" onclick="window.open('https://www.google.com/maps/place/${address}','_blank')';">View on Google Maps</button>
+                                    <h5 class="font" style="margin-top: 10px;">Shelter Address: ${address}</h5>
+                                    <a href="https://www.google.com/maps/place/${address}"><button type="button" class="btn btn-light font">View on Google Maps</button></a>
                                 </div>
                             </div>
                         </div>`;
@@ -135,12 +135,13 @@ function getBanks() {
                                         <h5 class="font" style="font-weight: 800">${name}</h5>
                                         <h5 class="font">Website Link: <a href="${website_link}">${name} link</a></h5>
                                         <h5 class="font">Phone Number: <a href="tel:${phone_number}">${phone_number}</a></h5>
+                                        <h5 class="font">Distance (miles): ${d}</h5>
                                     </div>
                                 </div>
                                 
                                 <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                                    <h5 class="font" style="margin-top: 10px;">Shelter Adress: ${address}</h5>
-                                    <button type="button" class="btn btn-light font" onclick="window.open('https://www.google.com/maps/place/${address}','_blank')';">View on Google Maps</button>
+                                    <h5 class="font" style="margin-top: 10px;">Food Bank Address: ${address}</h5>
+                                    <a href="https://www.google.com/maps/place/${address}"><button type="button" class="btn btn-light font">View on Google Maps</button></a>
                                 </div>
                             </div>
                         </div>`;
