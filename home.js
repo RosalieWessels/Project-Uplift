@@ -93,6 +93,42 @@ function getBanks() {
     });
 }
 
+function getJobs() {
+    document.getElementById("cards").innerHTML = ""
+    document.getElementById("cards").innerHTML += `<h2 class="font" style="padding-bottom: 20px; font-weight: 600;">Job Resources</h2>`
+    db.collection("jobs")
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            var description = doc.data().Description
+            var name = doc.data().Name
+            var image = doc.data().Image
+            var website = doc.data().Website
+            console.log("name", name)
+            document.getElementById("cards").innerHTML +=
+    `<div id = "card" class="content-card-basic" style="margin-top: 40px;">
+                <div class="card__content_basic">
+                    <div style="display: flex; justify-content: left; column-gap: 20px;">
+                        <img src="${image}" alt="" style="width: 20%;"w>
+                        <div>
+                            <h5 class="font" style="font-weight: 800">${name}</h5>
+                            <h5 class="font">Website Link: <a href="${website}">${name} link</a></h5>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        <h5 class="font" style="margin-top: 10px;">${description}</h5>
+                    </div>
+                </div>
+            </div>`;
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+}
 
 //start with shelters
 getShelters() 
