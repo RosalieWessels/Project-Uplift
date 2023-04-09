@@ -250,7 +250,7 @@ function getLatitudeAndLongitude() {
     county = obj["addresses"][0]["county"] + " " + obj["addresses"][0]["countryFlag"]
     console.log(latitude, longitude, county)
     document.getElementById("locationText").textContent = county
-    //getWeather()
+    getWeather()
 };
 
 
@@ -264,13 +264,13 @@ function httpGet(url,key) {
 
 function getWeather() {
     //api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
-    var key = "700491a30254f608056cb1d5485fba70"
-    var url = "api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + key
-    var results = httpGet(url,key);
-    console.log(httpGet(url,key));
+    var url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=700491a30254f608056cb1d5485fba70&units=imperial"
+    var results = httpGet3(url);
+    console.log(httpGet3(url));
     var obj = JSON.parse(results);
     console.log("WEATHER", obj)
-
+    temperature = obj["list"][7]["main"]["temp"]
+    console.log("Temperature in 24 hours is", temperature)
 }
 
 function httpGet3(url) {
