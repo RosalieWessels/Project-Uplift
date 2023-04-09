@@ -250,6 +250,7 @@ function getLatitudeAndLongitude() {
     county = obj["addresses"][0]["county"] + " " + obj["addresses"][0]["countryFlag"]
     console.log(latitude, longitude, county)
     document.getElementById("locationText").textContent = county
+    //getWeather()
 };
 
 
@@ -261,8 +262,62 @@ function httpGet(url,key) {
     return xmlHttp.responseText;
 }
 
+function getWeather() {
+    //api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+    var key = "700491a30254f608056cb1d5485fba70"
+    var url = "api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + key
+    var results = httpGet(url,key);
+    console.log(httpGet(url,key));
+    var obj = JSON.parse(results);
+    console.log("WEATHER", obj)
+
+}
+
+function httpGet3(url) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false );
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
+}
 
 getLatitudeAndLongitude()
+
+function sendMessage() {
+    var url = "https://api.twilio.com/2010-04-01/Accounts/AC42271f450ff4023bbbe22b410f62b51e/Messages.json"
+    var docRef = db.collection("twillio").doc("token");
+
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+            authToken = doc.data().auth
+            console.log("authToken", authToken)
+            result = httpPost(url, authToken);
+            console.log("RESULT", result)
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+}
+
+function httpPost(url, authToken) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "POST", url, true );
+    var userColonPassword = "AC42271f450ff4023bbbe22b410f62b51e:" + authToken 
+    console.log("user colon password", userColonPassword)
+    xmlHttp.setRequestHeader('Authorization','Basic ' + btoa(userColonPassword));
+    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlHttp.send("To=+16504929179&From=+18449510710&Body=Hello! Seems like it will be very cold tomorrow, so be sure to find a shelter. Check on Project Uplift for your closest one.");
+    return xmlHttp.responseText;
+}
+//sendMessage()
+
+
+
+
+
 
 
 
