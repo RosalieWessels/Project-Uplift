@@ -10,6 +10,8 @@ const firebaseConfig = {
   // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 db = firebase.firestore();
+var latitude = 0
+var longitude = 0
 
 function getShelters() {
     document.getElementById("cards").innerHTML = ""
@@ -130,11 +132,76 @@ function getJobs() {
     });
 }
 
+
+function getEducation() {
+    document.getElementById("cards").innerHTML = ""
+    document.getElementById("cards").innerHTML += `<h2 class="font" style="padding-bottom: 20px; font-weight: 600;">Education Resources</h2>`
+    db.collection("Education Resources")
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            var description = doc.data().Description
+            var name = doc.data().Name
+            var image = doc.data().Image
+            var website = doc.data().Website
+            console.log("name", name)
+            document.getElementById("cards").innerHTML +=
+    `<div id = "card" class="content-card-basic" style="margin-top: 40px;">
+                <div class="card__content_basic">
+                    <div style="display: flex; justify-content: left; column-gap: 20px;">
+                        <img src="${image}" alt="" style="width: 20%;"w>
+                        <div>
+                            <h5 class="font" style="font-weight: 800">${name}</h5>
+                            <h5 class="font">Website Link: <a href="${website}">${name} link</a></h5>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        <h5 class="font" style="margin-top: 10px;">${description}</h5>
+                    </div>
+                </div>
+            </div>`;
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+function getAlerts() {
+    document.getElementById("cards").innerHTML = ""
+    document.getElementById("cards").innerHTML += `<h2 class="font" style="padding-bottom: 20px; font-weight: 600;">Weather Alerts</h2>`
+}
+
 //start with shelters
 getShelters() 
 
+console.log("STORED ADDRESS", window.localStorage.getItem('address'));
+var user_address = window.localStorage.getItem('address')
+
+function testingAPI() { 
+    var key = "prj_live_pk_82306ea0589ace08c48df8cce747436e7328f0fe"; 
+    var url = "https://api.radar.io/v1/geocode/forward?query=" + user_address + "&country=US";
+    var results = httpGet(url,key);
+    console.log(httpGet(url,key));
+    var obj = JSON.parse(results);
+    latitude = obj["addresses"][0]["latitude"]
+    longitude = obj["addresses"][0]["longitude"]
+    console.log(latitude, longitude)
+};
 
 
+function httpGet(url,key) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false );
+    xmlHttp.setRequestHeader("Authorization", key);
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
+}
+
+testingAPI()
 
 
 
