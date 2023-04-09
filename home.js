@@ -13,6 +13,7 @@ db = firebase.firestore();
 var latitude = 0
 var longitude = 0
 var county = ""
+var tomorrowsTemp = 0
 
 function getDistance(lat1, long1, lat2, long2) { 
     var key = "prj_live_pk_82306ea0589ace08c48df8cce747436e7328f0fe"; 
@@ -230,7 +231,17 @@ function getEducation() {
 
 function getAlerts() {
     document.getElementById("cards").innerHTML = ""
-    document.getElementById("cards").innerHTML += `<h2 class="font" style="padding-bottom: 20px; font-weight: 600;">Weather Alerts</h2>`
+    document.getElementById("cards").innerHTML += `<h2 class="font" style="padding-bottom: 20px; font-weight: 600;">Opt in to Cold Weather Alerts</h2>
+    <h5 class="font" id="temp" style="margin-bottom: 20px">Tomorrow Night's Temperature: </h5>
+    <div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Phone #</span>
+    </div>
+    <input type="text" id="phone" class="form-control" placeholder="phone" aria-label="phone" aria-describedby="basic-addon1">
+    </div>
+    <button type="button" class="btn btn-light font" style="margin-top: 20px" onclick="submitPhone()">Get Alerts</button>
+    <h5 class="font" id="succeeded" style="margin-top: 20px"></h5>`
+    getWeather()
 }
 
 //start with shelters
@@ -269,11 +280,20 @@ function getWeather() {
     console.log(httpGet3(url));
     var obj = JSON.parse(results);
     console.log("WEATHER", obj)
-    temperature = obj["list"][7]["main"]["temp"]
+    temperature = obj["list"][12]["main"]["temp"]
     console.log("Temperature in 24 hours is", temperature)
-    if (temperature < 50) {
+    tomorrowsTemp = temperature
+    document.getElementById("temp").textContent = "Tomorrow Night's Temperature " +  tomorrowsTemp + " degrees Fahrenheit"
+}
+
+function submitPhone() {
+    var phoneN = document.getElementById('phone').value;
+    console.log("PHONE NUMBER TO SEND TO", phoneN);
+    document.getElementById("succeeded").textContent = "You have successfully opted in, look out for a text message if the forecast weather drops below 50 degrees"
+    if (tomorrowsTemp < 45) {
         console.log("sending message bc cold")
-        //sendMessage("6504929179") //TODO: ENABLE
+
+        sendMessage(phoneN) //TODO: ENABLE
     }
 }
 
@@ -313,7 +333,7 @@ function httpPost(url, authToken, phone) {
     console.log("user colon password", userColonPassword)
     xmlHttp.setRequestHeader('Authorization','Basic ' + btoa(userColonPassword));
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttp.send("To=+1" + phone + "&From=+18449510710&Body=Hello! Seems like it will be very cold tomorrow, so be sure to find a shelter. Check on Project Uplift for your closest one.");
+    xmlHttp.send("To=+1" + phone + "&From=+18449510710&Body=Hello! Seems like it will be very cold soon (" + tomorrowsTemp + " degrees Fahrenheit) in " + county + ", so be sure to find a shelter. Check on Project Uplift for your closest one.");
     return xmlHttp.responseText;
 }
 //sendMessage()
