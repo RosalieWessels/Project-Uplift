@@ -4,4 +4,4 @@ Project Uplift is a website that aims to help homeless people find information o
 
 <img src="Cover.png" alt="Cover page" width="100%"/>
 
-<img src="Image 4-9-23 at 7.07 AM.jpg" alt="Main Page" width="80%"/>
+<img src="Image 4-9-23 at 7.07 AM.jpg" alt="Main Page" width="100%"/>
