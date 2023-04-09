@@ -271,6 +271,10 @@ function getWeather() {
     console.log("WEATHER", obj)
     temperature = obj["list"][7]["main"]["temp"]
     console.log("Temperature in 24 hours is", temperature)
+    if (temperature < 50) {
+        console.log("sending message bc cold")
+        //sendMessage("6504929179") //TODO: ENABLE
+    }
 }
 
 function httpGet3(url) {
@@ -282,7 +286,7 @@ function httpGet3(url) {
 
 getLatitudeAndLongitude()
 
-function sendMessage() {
+function sendMessage(phone) {
     var url = "https://api.twilio.com/2010-04-01/Accounts/AC42271f450ff4023bbbe22b410f62b51e/Messages.json"
     var docRef = db.collection("twillio").doc("token");
 
@@ -291,7 +295,7 @@ function sendMessage() {
             console.log("Document data:", doc.data());
             authToken = doc.data().auth
             console.log("authToken", authToken)
-            result = httpPost(url, authToken);
+            result = httpPost(url, authToken, phone);
             console.log("RESULT", result)
         } else {
             // doc.data() will be undefined in this case
@@ -302,14 +306,14 @@ function sendMessage() {
     });
 }
 
-function httpPost(url, authToken) {
+function httpPost(url, authToken, phone) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "POST", url, true );
     var userColonPassword = "AC42271f450ff4023bbbe22b410f62b51e:" + authToken 
     console.log("user colon password", userColonPassword)
     xmlHttp.setRequestHeader('Authorization','Basic ' + btoa(userColonPassword));
     xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlHttp.send("To=+16504929179&From=+18449510710&Body=Hello! Seems like it will be very cold tomorrow, so be sure to find a shelter. Check on Project Uplift for your closest one.");
+    xmlHttp.send("To=+1" + phone + "&From=+18449510710&Body=Hello! Seems like it will be very cold tomorrow, so be sure to find a shelter. Check on Project Uplift for your closest one.");
     return xmlHttp.responseText;
 }
 //sendMessage()
